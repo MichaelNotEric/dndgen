@@ -25,7 +25,14 @@ def show():
 @app.route('/tavern', methods=['GET', 'POST'])
 def tavern():
     error = None
-    tavern = main()
-    return render_template('tavern.html', error=error, tavern=tavern)
+    if request.method == 'POST':
+        num = int(request.form['selection'])
+        names = [main() for i in range(num)]
+        return render_template('tavern.html', error=error, names=names)
+        #return render_template('tavern.html', error=error, names=names)
+    else:
+        tavern = main()
+        names = [tavern]
+        return render_template('tavern.html', error=error, names=names)
 
 app.run()
